@@ -2,7 +2,7 @@ to-string
 ===
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Dependencies][dependencies-image]][dependencies-url]
 
-> [Transform stream](http://nodejs.org/api/stream.html#stream_class_stream_transform) which converts each datum to string.
+> [Transform stream](http://nodejs.org/api/stream.html#stream_class_stream_transform) which converts each datum to a string.
 
 
 ## Installation
