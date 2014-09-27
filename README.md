@@ -2,7 +2,7 @@ to-string
 ===
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Dependencies][dependencies-image]][dependencies-url]
 
-> Transform stream which converts each datum to string.
+> [Transform stream](http://nodejs.org/api/stream.html#stream_class_stream_transform) which converts each datum to string.
 
 
 ## Installation
@@ -16,6 +16,41 @@ For use in the browser, use [browserify](https://github.com/substack/node-browse
 
 ## Usage
 
+To use the module,
+
+``` javascript
+var toString = require( 'flow-to-string' );
+```
+
+#### toString( [options] )
+
+Returns a transform `stream` where each `chunk` is converted to a `string`. 
+
+A few notes:
+* 	the output (readable) stream __always__ operates in `objectMode`
+* 	the input (writable) stream __never__ decode strings (`decodeStrings=false`)
+* 	all other Transform `options` are honored: `encoding`, `highWaterMark`, `allowHalfOpen`
+
+One additional option is provided: `isUndefined`. The `isUndefined` option specifies how to represent `undefined` values as `strings`. By default, an `undefined` is represented as `"undefined"`.
+
+To create a `toString` stream,
+
+``` javascript
+var stream = toString();
+```
+
+The default `highWaterMark` is `16kb`, `encoding` is `null`, `allowHalfOpen` is `true`, and `isUndefined` is `"undefined"`. To set the `options`,
+
+``` javascript
+var opts = {
+		'encoding': 'utf8',
+		'highWaterMark': 8,
+		'allowHalfOpen': false,
+		'isUndefined': 'BEEP'
+	};
+
+stream = toSstring( opts );
+```
 
 
 
@@ -24,8 +59,7 @@ For use in the browser, use [browserify](https://github.com/substack/node-browse
 ``` javascript
 var toString = require( 'flow-to-string' ),
 	newline = require( 'flow-newline' ),
-	readArray = require( 'flow-read-array' ),
-	flowStream = require( 'flow-to-string' );
+	readArray = require( 'flow-read-array' );
 
 // Create some data...
 var data = new Array( 1000 );
@@ -36,12 +70,8 @@ for ( var i = 0; i < data.length; i++ ) {
 // Create a readable stream:
 var readStream = readArray( data );
 
-// Create a new flow stream:
-var stream = flowStream();
-
 // Pipe the data:
 readStream
-	.pipe( stream )
 	.pipe( toString() )
 	.pipe( newline() )
 	.pipe( process.stdout );

@@ -25,20 +25,23 @@
   "keywords": [
     "stream",
     "flow",
-    "flow.io"
+    "flow.io",
+    "transform",
+    "duplex",
+    "tostring"
   ],
   "bugs": {
     "url": "https://github.com/flow-io/to-string-node/issues"
   },
-  "dependencies": {},
+  "dependencies": {
+    "validate.io-object": "^1.0.0"
+  },
   "devDependencies": {
     "chai": "1.x.x",
     "mocha": "1.x.x",
     "coveralls": "^2.11.1",
     "istanbul": "^0.3.0",
     "flow-read-array": "^1.0.0",
-    "flow-to-string": "^1.0.0",
-    "flow-newline": "^1.0.0",
     "flow-mock-read": "^1.0.0",
     "flow-mock-write": "^1.0.0"
   },
