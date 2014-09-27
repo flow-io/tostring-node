@@ -220,4 +220,20 @@ describe( 'flow-to-string', function tests() {
 		}
 	});
 
+	it( 'should honor alternative encodings', function test( done ) {
+		var data = ' ',
+			expected = ' ';
+
+		var s = stream();
+
+		s.on( 'data', onData );
+		s.write( data, 'ascii' );
+
+		function onData( actual ) {
+			console.log( typeof actual );
+			assert.strictEqual( expected, actual );
+			done();
+		}
+	});
+
 });
