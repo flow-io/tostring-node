@@ -46,7 +46,7 @@ The default options are as follows:
 *	`isUndefined="undefined"`
 * 	`objectMode=false`
 
-To set the `options`,
+To set the `options` when creating a stream,
 
 ``` javascript
 var opts = {
@@ -78,7 +78,7 @@ var factory = toString.factory( opts );
 
 var streams = new Array( 10 );
 
-// Create many streams configured identically but may be written to with different datasets...
+// Create many streams configured identically but may each be independently written to...
 for ( var i = 0; i < streams.length; i++ ) {
 	streams[ i ] = factory();
 }
@@ -87,7 +87,7 @@ for ( var i = 0; i < streams.length; i++ ) {
 
 #### toString.objectMode( [options] )
 
-This method is a convenience function to create readable streams which always operate in `objectMode`. The method will __always__ override the `objectMode` option in `options`.
+This method is a convenience function to create transform streams which always operate in `objectMode`. The method will __always__ override the `objectMode` option in `options`.
 
 ``` javascript
 var readArray, toString;
@@ -95,7 +95,7 @@ var readArray, toString;
 readArray = require( 'flow-read-array' ).objectMode;
 toString = require( 'flow-to-string' ).objectMode;
 
-readArray( ['b','e','e','p'] )
+readArray( [1,2,3,4] )
 	.pipe( toString() )
 	.pipe( process.stdout );
 ```
