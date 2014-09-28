@@ -38,7 +38,7 @@ describe( 'flow-to-string', function tests() {
 			expect( foo ).to.throw( TypeError );
 
 			function foo() {
-				stream([],{'objectMode': []});
+				stream({'objectMode': []});
 			}
 		});
 
