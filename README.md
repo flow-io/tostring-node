@@ -29,7 +29,7 @@ Returns a transform `stream` where each `chunk` is converted to a `string`.
 A few notes:
 * 	the output (readable) stream __always__ operates in `objectMode`
 * 	the input (writable) stream __never__ decode strings (`decodeStrings=false`)
-* 	all other Transform `options` are honored: `encoding`, `highWaterMark`, `allowHalfOpen`, and 'objectMode' (writable)
+* 	all other Transform `options` are honored: `encoding`, `highWaterMark`, `allowHalfOpen`, and `objectMode` (writable)
 
 One additional option is provided: `isUndefined`. The `isUndefined` option specifies how to represent `undefined` values as `strings`. By default, an `undefined` value is represented as `"undefined"`.
 
