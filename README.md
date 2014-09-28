@@ -29,27 +29,75 @@ Returns a transform `stream` where each `chunk` is converted to a `string`.
 A few notes:
 * 	the output (readable) stream __always__ operates in `objectMode`
 * 	the input (writable) stream __never__ decode strings (`decodeStrings=false`)
-* 	all other Transform `options` are honored provided `objectMode` and `decodeStrings`: `encoding`, `highWaterMark`, `allowHalfOpen`
+* 	all other Transform `options` are honored: `encoding`, `highWaterMark`, `allowHalfOpen`, and 'objectMode' (writable)
 
-One additional option is provided: `isUndefined`. The `isUndefined` option specifies how to represent `undefined` values as `strings`. By default, an `undefined` is represented as `"undefined"`.
+One additional option is provided: `isUndefined`. The `isUndefined` option specifies how to represent `undefined` values as `strings`. By default, an `undefined` value is represented as `"undefined"`.
 
-To create a `toString` stream,
+To create a stream,
 
 ``` javascript
 var stream = toString();
 ```
 
-The default `highWaterMark` is `16kb`, `encoding` is `null`, `allowHalfOpen` is `true`, and `isUndefined` is `"undefined"`. To set the `options`,
+The default options are as follows:
+*	`highWaterMark=16`
+*	`encoding=null`
+*	`allowHalfOpen=true`
+*	`isUndefined="undefined"`
+* 	`objectMode=false`
+
+To set the `options`,
 
 ``` javascript
 var opts = {
 		'encoding': 'utf8',
 		'highWaterMark': 8,
 		'allowHalfOpen': false,
+		'objectMode': true,
 		'isUndefined': 'BEEP'
 	};
 
-stream = toSstring( opts );
+stream = toString( opts );
+```
+
+
+#### toString.factory( [options] )
+
+Returns a reusable stream factory. The factory method ensures streams are configured identically by using the same set of provided `options`.
+
+``` javascript
+var opts = {
+		'encoding': 'utf8',
+		'highWaterMark': 8,
+		'allowHalfOpen': false,
+		'objectMode': true,
+		'isUndefined': 'BEEP'
+	};
+
+var factory = toString.factory( opts );
+
+var streams = new Array( 10 );
+
+// Create many streams configured identically but may be written to with different datasets...
+for ( var i = 0; i < streams.length; i++ ) {
+	streams[ i ] = factory();
+}
+```
+
+
+#### toString.objectMode( [options] )
+
+This method is a convenience function to create readable streams which always operate in `objectMode`. The method will __always__ override the `objectMode` option in `options`.
+
+``` javascript
+var readArray, toString;
+
+readArray = require( 'flow-read-array' ).objectMode;
+toString = require( 'flow-to-string' ).objectMode;
+
+readArray( ['b','e','e','p'] )
+	.pipe( toString() )
+	.pipe( process.stdout );
 ```
 
 
