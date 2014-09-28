@@ -34,7 +34,7 @@ describe( 'flow-to-string', function tests() {
 			expect( stream ).to.be.a( 'function' );
 		});
 
-		it( 'should throw an error if not provided a bad option', function test() {
+		it( 'should throw an error if provided a bad option', function test() {
 			expect( foo ).to.throw( TypeError );
 
 			function foo() {
