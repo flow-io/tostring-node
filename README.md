@@ -1,4 +1,4 @@
-to-string
+toString
 ===
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Dependencies][dependencies-image]][dependencies-url]
 
@@ -8,7 +8,7 @@ to-string
 ## Installation
 
 ``` bash
-$ npm install flow-to-string
+$ npm install flow-tostring
 ```
 
 For use in the browser, use [browserify](https://github.com/substack/node-browserify).
@@ -19,21 +19,12 @@ For use in the browser, use [browserify](https://github.com/substack/node-browse
 To use the module,
 
 ``` javascript
-var toString = require( 'flow-to-string' );
+var toString = require( 'flow-tostring' );
 ```
 
 #### toString( [options] )
 
-Returns a transform `stream` where each `chunk` is converted to a `string`. 
-
-A few notes:
-* 	the output (readable) stream __always__ operates in `objectMode`
-* 	the input (writable) stream __never__ decodes strings (`decodeStrings=false`)
-* 	all other Transform `options` are honored: `encoding`, `highWaterMark`, `allowHalfOpen`, and `objectMode` (writable)
-
-One additional option is provided: `isUndefined`. The `isUndefined` option specifies how to represent `undefined` values as `strings`. By default, an `undefined` value is represented as `"undefined"`.
-
-To create a stream,
+Returns a transform `stream` where each `chunk` is converted to a `string`. To create a new stream,
 
 ``` javascript
 var stream = toString();
@@ -43,8 +34,8 @@ The default options are as follows:
 *	`highWaterMark=16`
 *	`encoding=null`
 *	`allowHalfOpen=true`
-*	`isUndefined="undefined"`
 * 	`objectMode=false`
+*	`decodeStrings=true`
 
 To set the `options` when creating a stream,
 
@@ -54,7 +45,7 @@ var opts = {
 		'highWaterMark': 8,
 		'allowHalfOpen': false,
 		'objectMode': true,
-		'isUndefined': 'BEEP'
+		'decodeStrings': false
 	};
 
 stream = toString( opts );
@@ -71,7 +62,7 @@ var opts = {
 		'highWaterMark': 8,
 		'allowHalfOpen': false,
 		'objectMode': true,
-		'isUndefined': 'BEEP'
+		'decodeStrings': false
 	};
 
 var factory = toString.factory( opts );
@@ -90,12 +81,12 @@ for ( var i = 0; i < streams.length; i++ ) {
 This method is a convenience function to create transform streams which always operate in `objectMode`. The method will __always__ override the `objectMode` option in `options`.
 
 ``` javascript
-var readArray, toString;
+var fromArray, toString;
 
-readArray = require( 'flow-read-array' ).objectMode;
-toString = require( 'flow-to-string' ).objectMode;
+fromArray = require( 'flow-from-array' ).objectMode;
+toString = require( 'flow-tostring' ).objectMode;
 
-readArray( [1,2,3,4] )
+fromArray( [1,2,3,4] )
 	.pipe( toString() )
 	.pipe( process.stdout );
 ```
@@ -105,9 +96,9 @@ readArray( [1,2,3,4] )
 ## Examples
 
 ``` javascript
-var toString = require( 'flow-to-string' ),
-	newline = require( 'flow-newline' ),
-	readArray = require( 'flow-read-array' );
+var toString = require( 'flow-tostring' ),
+	append = require( 'flow-append' ).objectMode,
+	fromArray = require( 'flow-from-array' );
 
 // Create some data...
 var data = new Array( 1000 );
@@ -116,12 +107,12 @@ for ( var i = 0; i < data.length; i++ ) {
 }
 
 // Create a readable stream:
-var readStream = readArray( data );
+var readableStream = fromArray( data );
 
 // Pipe the data:
-readStream
+readableStream
 	.pipe( toString() )
-	.pipe( newline() )
+	.pipe( append( '\n' ) )
 	.pipe( process.stdout );
 ```
 
@@ -130,6 +121,26 @@ To run the example code from the top-level application directory,
 ``` bash
 $ node ./examples/index.js
 ```
+
+
+## Notes
+
+The output (readable) stream __always__ operates in 'objectMode'.
+
+When in `objectMode`, anything which is not a `buffer` or a `string` is coerced into being a `string`. Values are stringified according to the following conventions:
+
+*	`undefined`: `"undefined"`
+*	`number`: `<number>.toString()`
+*	`boolean`: `<boolean>.toString()`
+*	`function`: `<function>.toString()`
+*	`array`: `JSON.stringify( <array> )`
+*	`object`: `JSON.stringify( <object> )`
+
+The only value which cannot be converted to a `string` is `null` due to the special status `null` has in Node.js streams.
+
+With the exception of `arrays` and `objects`, the conventions follow the [ES5 specification](http://es5.github.io/#x9.8). `arrays` and `objects` are more conveniently stringified.
+
+Note that the stringified values are buffered according to the `encoding` option. If the `encoding` is `null` (default), buffering assumes `utf8` encoding. 
 
 
 ## Tests
@@ -174,17 +185,17 @@ Copyright &copy; 2014. Athan Reines.
 [npm-image]: http://img.shields.io/npm/v/flow-to-string.svg
 [npm-url]: https://npmjs.org/package/flow-to-string
 
-[travis-image]: http://img.shields.io/travis/flow-io/to-string-node/master.svg
-[travis-url]: https://travis-ci.org/flow-io/to-string-node
+[travis-image]: http://img.shields.io/travis/flow-io/tostring-node/master.svg
+[travis-url]: https://travis-ci.org/flow-io/tostring-node
 
-[coveralls-image]: https://img.shields.io/coveralls/flow-io/to-string-node/master.svg
-[coveralls-url]: https://coveralls.io/r/flow-io/to-string-node?branch=master
+[coveralls-image]: https://img.shields.io/coveralls/flow-io/tostring-node/master.svg
+[coveralls-url]: https://coveralls.io/r/flow-io/tostring-node?branch=master
 
-[dependencies-image]: http://img.shields.io/david/flow-io/to-string-node.svg
-[dependencies-url]: https://david-dm.org/flow-io/to-string-node
+[dependencies-image]: http://img.shields.io/david/flow-io/tostring-node.svg
+[dependencies-url]: https://david-dm.org/flow-io/tostring-node
 
-[dev-dependencies-image]: http://img.shields.io/david/dev/flow-io/to-string-node.svg
-[dev-dependencies-url]: https://david-dm.org/dev/flow-io/to-string-node
+[dev-dependencies-image]: http://img.shields.io/david/dev/flow-io/tostring-node.svg
+[dev-dependencies-url]: https://david-dm.org/dev/flow-io/tostring-node
 
-[github-issues-image]: http://img.shields.io/github/issues/flow-io/to-string-node.svg
-[github-issues-url]: https://github.com/flow-io/to-string-node/issues
+[github-issues-image]: http://img.shields.io/github/issues/flow-io/tostring-node.svg
+[github-issues-url]: https://github.com/flow-io/tostring-node/issues

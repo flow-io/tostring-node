@@ -25,7 +25,7 @@ var expect = chai.expect,
 
 // TESTS //
 
-describe( 'flow-to-string', function tests() {
+describe( 'flow-tostring', function tests() {
 	'use strict';
 
 	describe( 'class', function tests() {
@@ -47,7 +47,8 @@ describe( 'flow-to-string', function tests() {
 					'encoding': 'utf8',
 					'objectMode': true,
 					'highWaterMark': 16,
-					'allowHalfOpen': true
+					'allowHalfOpen': true,
+					'decodeStrings': false
 				};
 			assert.instanceOf( stream( opts ), Transform );
 		});
@@ -100,32 +101,6 @@ describe( 'flow-to-string', function tests() {
 				];
 
 			var s = stream();
-
-			mockRead( s, onData );
-			mockWrite( data, s );
-
-			function onData( error, actual ) {
-				if ( error ) {
-					assert.notOk( true );
-					return;
-				}
-				assert.deepEqual( expected, actual );
-				done();
-			}
-		});
-
-		it( 'should allow for undefined values to be arbitrarily defined', function test( done ) {
-			var data = [
-					undefined
-				],
-				expected = [
-					'BEEP'
-				];
-
-			var s = stream({
-					'objectMode': true,
-					'isUndefined': 'BEEP'
-				});
 
 			mockRead( s, onData );
 			mockWrite( data, s );

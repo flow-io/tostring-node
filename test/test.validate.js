@@ -63,6 +63,27 @@ describe( 'validate', function tests() {
 		}
 	});
 
+	it( 'should return an error if decodeStrings option is not a boolean', function test() {
+		var values = [
+				5,
+				{},
+				'5',
+				null,
+				NaN,
+				undefined,
+				[],
+				function(){}
+			],
+			err;
+
+		for ( var i = 0; i < values.length; i++ ) {
+			err = validate({
+				'decodeStrings': values[i]
+			});
+			assert.instanceOf( err, TypeError );
+		}
+	});
+
 	it( 'should return an error if encoding option is not a string or null', function test() {
 		var values = [
 				5,
@@ -125,26 +146,5 @@ describe( 'validate', function tests() {
 			assert.instanceOf( err, TypeError );
 		}
 	});
-
-	it( 'should return an error if isUndefined option is not a string', function test() {
-		var values = [
-				5,
-				true,
-				null,
-				{},
-				NaN,
-				undefined,
-				[],
-				function(){}
-			],
-			err;
-
-		for ( var i = 0; i < values.length; i++ ) {
-			err = validate({
-				'isUndefined': values[i]
-			});
-			assert.instanceOf( err, TypeError );
-		}
-	});
-
+	
 });

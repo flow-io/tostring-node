@@ -1,6 +1,6 @@
 {
   "name": "flow-to-string",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Transform stream which converts each datum to a string.",
   "author": {
     "name": "Athan Reines",
@@ -20,7 +20,7 @@
   "main": "./lib",
   "repository": {
     "type": "git",
-    "url": "git://github.com/flow-io/to-string-node.git"
+    "url": "git://github.com/flow-io/tostring-node.git"
   },
   "keywords": [
     "stream",
@@ -31,7 +31,7 @@
     "tostring"
   ],
   "bugs": {
-    "url": "https://github.com/flow-io/to-string-node/issues"
+    "url": "https://github.com/flow-io/tostring-node/issues"
   },
   "dependencies": {
     "readable-stream": "^1.0.32",
@@ -39,12 +39,13 @@
   },
   "devDependencies": {
     "chai": "1.x.x",
-    "mocha": "1.x.x",
     "coveralls": "^2.11.1",
-    "istanbul": "^0.3.0",
-    "flow-read-array": "^1.0.0",
+    "flow-append": "^1.0.1",
+    "flow-from-array": "^1.1.4",
     "flow-mock-read": "^1.0.0",
-    "flow-mock-write": "^1.0.0"
+    "flow-mock-write": "^1.0.0",
+    "istanbul": "^0.3.0",
+    "mocha": "1.x.x"
   },
   "licenses": [
     {
