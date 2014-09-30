@@ -182,8 +182,8 @@ $ open reports/coverage/lcov-report/index.html
 Copyright &copy; 2014. Athan Reines.
 
 
-[npm-image]: http://img.shields.io/npm/v/flow-to-string.svg
-[npm-url]: https://npmjs.org/package/flow-to-string
+[npm-image]: http://img.shields.io/npm/v/flow-tostring.svg
+[npm-url]: https://npmjs.org/package/flow-tostring
 
 [travis-image]: http://img.shields.io/travis/flow-io/tostring-node/master.svg
 [travis-url]: https://travis-ci.org/flow-io/tostring-node
