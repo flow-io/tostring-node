@@ -125,7 +125,7 @@ $ node ./examples/index.js
 
 ## Notes
 
-The output (readable) stream __always__ operates in 'objectMode'.
+The output (readable) stream __always__ operates in `objectMode`.
 
 When in `objectMode`, anything which is not a `buffer` or a `string` is coerced into being a `string`. Values are stringified according to the following conventions:
 
