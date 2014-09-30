@@ -1,6 +1,6 @@
 {
   "name": "flow-tostring",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Transform stream which converts each datum to a string.",
   "author": {
     "name": "Athan Reines",
