@@ -4,6 +4,7 @@ toString
 
 > [Transform stream](http://nodejs.org/api/stream.html#stream_class_stream_transform) which converts each datum to a string.
 
+__DEPRECATED__: use [flow-tostring](https://github.com/flow-io/tostring-node).
 
 ## Installation
 
